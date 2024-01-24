@@ -1,24 +1,24 @@
 import psutil
 from plyer import notification
 import time
-battery = psutil.sensors_battery()
-print(battery)
-target = int(input("what battery percent do you want to be notified at? \n\n\n\n >>"))
 
-
+battery = psutil.sensors_battery()  # Update the battery information inside the loop
+current_percent = battery.percent
+print("Current battery percentage:", current_percent)
+target = int(input("What battery percent do you want to be notified at?\n>> "))
+print(f"OKAY! you will be reminded at {target} battery percentage")
 
 while True:
+    battery = psutil.sensors_battery()  # Update the battery information inside the loop
     current_percent = battery.percent
-    if current_percent <= target and battery.power_plugged == False:
+    print("checking...")
+    if current_percent <= target and not battery.power_plugged:
         notification.notify(
-            title="Current Battery Percentage, please plug in the charger",
-            message=f"{str(current_percent)}% battery remaining ",
+            title="Current Battery Percentage - Please plug in the charger",
+            message=f"{current_percent}% battery remaining",
             timeout=50
         )
-
-
         break
-    time.sleep(30)
+        exit()
 
-    # Add a delay or sleep here if needed
-    # time.sleep(60)  # Uncomment and adjust the value if you want to check periodically
+    time.sleep(30)
