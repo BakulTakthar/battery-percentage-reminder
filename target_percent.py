@@ -16,9 +16,10 @@ while True:
         notification.notify(
             title="Current Battery Percentage - Please plug in the charger",
             message=f"{current_percent}% battery remaining",
-            timeout=50
+            timeout=50 
         )
+        print("done!")
         break
-        exit()
+        
 
     time.sleep(30)
