@@ -10,6 +10,7 @@
 # import target_percent
 import customtkinter as ctk
 import psutil
+from test import *
 
 battery = psutil.sensors_battery()  # Update the battery information inside the loop
 current_percent = battery.percent
@@ -41,9 +42,7 @@ lable2 = ctk.CTkLabel(master=frame,
 
 lable2.pack()
 
-
-# progressbar.set(target_percent.current_percent/100)
-if current_percent >= 50:
+if current_percent > 35:
     progressbar = ctk.CTkProgressBar(master = frame,
                                      orientation="horizontal", 
                                      progress_color='green', 
@@ -123,7 +122,7 @@ input_value_from_1 = value_enter1.get()
 def TargetPercent():
     is_start_label.configure(text = f"started at {input_value_from_1}")
     START_BUTTON1.configure(text = "strated", state = 'disabled')
-
+    test()
 
 START_BUTTON1 = ctk.CTkButton(tab2, text="start", command = TargetPercent, bg_color= "transparent")
 START_BUTTON1.pack(pady=10)
@@ -136,12 +135,16 @@ textbox2 = ctk.CTkTextbox(tab3, width=450, height=120)
 
 textbox2.insert("0.0", "this mode helps you by reminding you to plug your device in when you cross a given battery percentage range.\n EG- \n \
     how often should the notifications be sent?\n>> 5\
-        \nyou will be notified at evrey time the device cosumes '5 percent battery'")  # insert at line 0 character 0
+        \nyou will be notified at evrey time the device cosumes '5 percent battery'") 
+
+# insert at line 0 character 0
 text = textbox2.get("0.0", "end")  # get text from line 0 character 0 till the end
 textbox2.configure(state="disabled")  # configure textbox to be read-only
 textbox2.pack(pady = 20)
+
 value_enter2 = ctk.CTkEntry(tab3, placeholder_text='enter the battery percentage to be reminded at')
 value_enter2.pack(pady=20)
+
 START_BUTTON2 = ctk.CTkButton(tab3, text="start",)
 START_BUTTON2.pack(pady=10)
 
