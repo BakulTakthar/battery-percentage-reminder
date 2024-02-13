@@ -47,7 +47,7 @@ if current_percent > 35:
                                      orientation="horizontal", 
                                      progress_color='green', 
                                      border_color='black', 
-                                     fg_color='white', 
+                                     fg_color='grey', 
                                      width = 200, 
                                      height = 15,
                                      bg_color="transparent")
