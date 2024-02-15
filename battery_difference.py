@@ -1,25 +1,25 @@
 import psutil
 from plyer import notification
+def batteryrange(frequency):
 
-frequency = int(input("how often should the notifications be sent?"))
-battery = psutil.sensors_battery()
-print(battery)
-
-percent = battery.percent
-
-while True:
     battery = psutil.sensors_battery()
-    current_percent = battery.percent
-    change = current_percent - percent
-    diff = abs(change)
+    print(battery)
 
-    if diff >= frequency:
-        notification.notify(
-            title = "Current Battery Percentage",
-            message = f"{str(current_percent)}% battery remaining ",
-            timeout = 5
-        )
+    percent = battery.percent
 
-        percent = current_percent
+    while True:
+        battery = psutil.sensors_battery()
+        current_percent = battery.percent
+        change = current_percent - percent
+        diff = abs(change)
 
-    continue
+        if diff >= frequency:
+            notification.notify(
+                title = "Current Battery Percentage",
+                message = f"{str(current_percent)}% battery remaining ",
+                timeout = 5
+            )
+
+            percent = current_percent
+
+        continue

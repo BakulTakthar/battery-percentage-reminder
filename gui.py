@@ -1,9 +1,11 @@
 '''
 # TODO: Make UTILS tab
-# TODO: fix paddding
-# TODO: add event callback to complement the function of the button
+
 # TODO: make it prettier :)
-# TODO: to get the value from the value entry box
+# TODO: make a stop button
+# TODO: make the range tab3
+# TODO: figure out the flow of execution in applications by study
+# TODO: do the other stuff as well
 '''
 
 '''#? master frame'''
@@ -11,7 +13,8 @@
 import customtkinter as ctk
 import psutil
 from test import *
-
+from backup import *
+from battery_difference import *
 battery = psutil.sensors_battery()  # Update the battery information inside the loop
 current_percent = battery.percent
 ctk.set_appearance_mode('system')
@@ -117,18 +120,36 @@ textbox1.pack(pady = 20)
 value_enter1 = ctk.CTkEntry(tab2, placeholder_text='enter the battery percentage to be reminded at')
 value_enter1.pack(pady=20)
 
-input_value_from_1 = value_enter1.get()
+
 
 def TargetPercent():
+    global input_value_from_1
+    input_value_from_1 = int(value_enter1.get())
     is_start_label.configure(text = f"started at {input_value_from_1}")
     START_BUTTON1.configure(text = "strated", state = 'disabled')
-    test()
+    # test(input_value_from_1)
+    start_target_percentage(input_value_from_1)
 
 START_BUTTON1 = ctk.CTkButton(tab2, text="start", command = TargetPercent, bg_color= "transparent")
 START_BUTTON1.pack(pady=10)
 
-is_start_label = ctk.CTkLabel(tab2, text = "please click the button to start")
+is_start_label = ctk.CTkLabel(tab2, text = "please click on the button to start")
 is_start_label.pack()
+
+
+def button_event():
+    print('button pressed')
+    exit()
+
+stop = ctk.CTkButton(tab2, text='stop', width=140, height=28)
+stop.pack(padx=10, pady=10)
+
+is_start_label = ctk.CTkLabel(tab2, text = "please click on the button to stop")
+is_start_label.pack()
+
+
+
+
 '''#? Tab3'''
 
 textbox2 = ctk.CTkTextbox(tab3, width=450, height=120)
@@ -142,11 +163,25 @@ text = textbox2.get("0.0", "end")  # get text from line 0 character 0 till the e
 textbox2.configure(state="disabled")  # configure textbox to be read-only
 textbox2.pack(pady = 20)
 
-value_enter2 = ctk.CTkEntry(tab3, placeholder_text='enter the battery percentage to be reminded at')
+value_enter2 = ctk.CTkEntry(tab3, placeholder_text='enter the battery percentage range to be reminded at')
 value_enter2.pack(pady=20)
 
 START_BUTTON2 = ctk.CTkButton(tab3, text="start",)
 START_BUTTON2.pack(pady=10)
 
+def PercentRange():
+    global input_value_from_2
+    input_value_from_2 = int(value_enter2.get())
+    is_start_label.configure(text = f"started at {input_value_from_2}")
+    START_BUTTON2.configure(text = "strated", state = 'disabled')
+    # test(input_value_from_1)
+    batteryrange(input_value_from_2)
+
+START_BUTTON2 = ctk.CTkButton(tab3, text="start", command = PercentRange, bg_color= "transparent")
+START_BUTTON2.pack(pady=10)
+
+is_start_label_2 = ctk.CTkLabel(tab3, text = "please click on the button to start")
+is_start_label_2.pack()
 
 root.mainloop()
+

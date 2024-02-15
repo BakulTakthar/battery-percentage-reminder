@@ -13,6 +13,7 @@ while True:
     current_percent = battery.percent
     print("checking...")
     if current_percent <= target and not battery.power_plugged:
+        
         notification.notify(
             title="Current Battery Percentage - Please plug in the charger",
             message=f"{current_percent}% battery remaining",
