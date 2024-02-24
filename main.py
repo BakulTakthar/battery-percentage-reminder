@@ -1,16 +1,7 @@
 '''
 
-# TODO: Make UTILS tab
-# TODO: stop both the functions when the app is closed
-# TODO: make a label whihc indicates when was the func started and when it ends
 # TODO: make it prettier :)
-# TODO: make a stop button
-# TODO: make the range tab3
-# TODO: do the other stuff as well
 # TODO: change the label logo and text
-# TODO: mkae a scrollbar and adjust the initial aspect ratio
-# TODO: make the battery progressbar update in live run of the program
-# Todo: make charging mode
 
 '''
 
