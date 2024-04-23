@@ -2,47 +2,36 @@
 
 # TODO: make it prettier :)
 # TODO: change the label logo and text
+# TODO: when stop button is pressed the code breaks and goes into not responding
+#TODO: the progressbar doesnt get updated while the application is running and i cant find a way to put a while loop in this function
+
 
 '''
 
 '''#? master frame'''
-# import target_percent
+
+#* importing important libraries
 import customtkinter as ctk
 import psutil
-from battery_difference import *
-from plyer import notification
-import time
+
+from plyer import notification #* dependent libraries for the imported finctions
+import time #* dependent libraries for the imported finctions 
+
 from threading import Thread
+
+#* importing necessary functions from other files
+from charge_mode import *
+from battery_difference import *
+
 
 def gui():
     NOTIFY = None
-    def start_target_percentage(target):
-        battery = psutil.sensors_battery()  # Update the battery information inside the loop
-        current_percent = battery.percent
-        print("Current battery percentage:", current_percent)
-        target = int(target)
-        print(f"OKAY! you will be reminded at {target} battery percentage")
 
-        while True:
-            battery = psutil.sensors_battery()  # Update the battery information inside the loop
-            current_percent = battery.percent
-            print("checking...")
-            if current_percent <= target and not battery.power_plugged:
-                
-                notification.notify(
-                    title="Current Battery Percentage - Please plug in the charger",
-                    message=f"{current_percent}% battery remaining",
-                    timeout=50 
-                )
-                print("done!")
-                NOTIFY = True
-                break
-                
-
-            time.sleep(30)
-
-
+    global stop_button
+    stop_button = None
+    
     battery = psutil.sensors_battery()  # Update the battery information inside the loop
+
     current_percent = battery.percent
     ctk.set_appearance_mode('system')
     ctk.set_default_color_theme('dark-blue')
@@ -71,6 +60,8 @@ def gui():
                         fg_color="transparent")
 
     lable2.pack()
+    
+    
 
     if current_percent > 35:
         progressbar = ctk.CTkProgressBar(master = frame,
@@ -95,7 +86,7 @@ def gui():
                                         bg_color="transparent")
         
         progressbar.set(current_percent/100)
-        
+                
     progressbar.pack()
 
     label3 = ctk.CTkLabel(master = frame,
@@ -157,8 +148,11 @@ def gui():
         # test(input_value_from_1)
         label_start = ctk.CTkLabel(tab2, text=f'Started at {input_value_from_1}', width=40, height=28, fg_color='transparent')
         label_start.place(x=10, y=10)
-        thread = Thread(target=start_target_percentage, args = (input_value_from_1,))
+        thread = Thread(target=charge_mode, args = (input_value_from_1, stop_button))
         thread.start()
+        
+        if stop_button:
+            sys.exit()
         
         
     START_BUTTON1 = ctk.CTkButton(tab2, text="start", command = TargetPercent, bg_color= "transparent")
@@ -170,9 +164,10 @@ def gui():
 
     def button_event():
         print('button pressed')
-        exit()
+        stop_button = True
+        sys.exit()
 
-    stop = ctk.CTkButton(tab2, text='stop', width=140, height=28)
+    stop = ctk.CTkButton(tab2, text='stop', width=140, height=28, command=button_event)
     stop.pack(padx=10, pady=10)
 
     is_start_label = ctk.CTkLabel(tab2, text = "please click on the button to stop")

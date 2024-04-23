@@ -1,5 +1,6 @@
 import psutil
 from plyer import notification
+
 def batteryrange(frequency):
 
     battery = psutil.sensors_battery()
